@@ -2,7 +2,13 @@ const AWS = require('aws-sdk');
 const Promise = require('bluebird');
 AWS.config.update({ region: 'us-east-2' });
 var sqs = new AWS.SQS({ apiVersion: '2012-11-05' });
-var stats = require('../../lib/statsD'); 
+var statsD = require('node-statsd'); 
+
+var stats = new statsD({
+  host: 'statsd.hostedgraphite.com',
+  port: 8125,
+  prefix: '9cc6ccfc-211b-410b-8442-df686a1abe6d'
+});
 
 // stats
 var pollingStart = 0;

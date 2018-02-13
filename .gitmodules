@@ -1,0 +1,3 @@
+[submodule "events-db"]
+	path = events-db
+	url = https://github.com/microspore/events-db

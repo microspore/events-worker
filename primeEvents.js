@@ -1,4 +1,4 @@
-const db = require('../lib/db');
+const db = require('./events-db');
 const { PrimeTrialSignup, PrimeTrialOptout, Counters } = db.models.Events;
 const { LocalDate, TimeUuid, Long } = db.models.datatypes;
 

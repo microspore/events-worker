@@ -2,6 +2,19 @@ const db = require('./events-db/');
 const { OrdersNewOrder, Counters } = db.models.Events;
 const { LocalDate, TimeUuid, Long } = db.models.datatypes;
 
+var statsD = require('node-statsd');
+
+var stats = new statsD({
+  host: 'statsd.hostedgraphite.com',
+  port: 8125,
+  prefix: '9cc6ccfc-211b-410b-8442-df686a1abe6d'
+});
+
+let workerId = '';
+if (process.env.TASK_SLOT) {
+  workerId = `.worker_${process.env.TASK_SLOT}`;
+}
+
 let buckets = [0, 10, 50, 100, 500, 1000];
 
 let processOrdersNewOrderEvents = (data) => {
@@ -33,6 +46,8 @@ let processOrdersNewOrderEvents = (data) => {
   var queries = [];
 
   let saveOrderStart = Date.now();
+
+  stats.increment('.backend.worker.counters.newOrderDbEntries');  
 
   return Promise.all([
     // save event

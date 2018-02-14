@@ -10,6 +10,11 @@ var stats = new statsD({
   prefix: '9cc6ccfc-211b-410b-8442-df686a1abe6d'
 });
 
+let workerId = '';
+if (process.env.TASK_SLOT) {
+  workerId = `.worker_${process.env.TASK_SLOT}`;
+}
+
 // stats
 var pollingStart = 0;
 var processBatchStart = 0;
@@ -76,7 +81,7 @@ EventQueue.prototype.pollMessages = async function () {
     
     if (data.Messages) {
 
-      stats.timing('.backend.worker.timers.waiting', Date.now() - pollingStart);  
+      stats.timing(`.backend.worker${workerId}.timers.waiting`, Date.now() - pollingStart);  
       
       processBatchStart = Date.now();
       // console.log('Process Batch', Date.now());
@@ -102,13 +107,13 @@ EventQueue.prototype.pollMessages = async function () {
       });
 
       // console.log('save', Date.now());
-      stats.timing('.backend.worker.timers.processBatch', Date.now() - processBatchStart);
+      stats.timing(`.backend.worker${workerId}.timers.processBatch`, Date.now() - processBatchStart);
       saveMessagesStart = Date.now();
 
       await Promise.all(tasks);
 
       // console.log('delete', Date.now());
-      stats.timing('.backend.worker.timers.saveMessages', Date.now() - saveMessagesStart);
+      stats.timing(`.backend.worker${workerId}.timers.saveMessages`, Date.now() - saveMessagesStart);
         
       var params = {
         Entries: done,
@@ -121,7 +126,7 @@ EventQueue.prototype.pollMessages = async function () {
      
       // reset long polling
       // console.log('finished', Date.now());
-      stats.timing('.backend.worker.timers.deleteMessages', Date.now() - deleteMessagesStart);  
+      stats.timing(`.backend.worker${workerId}.timers.deleteMessages`, Date.now() - deleteMessagesStart);  
 
       this.pollMessages();
     } else {

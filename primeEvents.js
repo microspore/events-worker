@@ -29,6 +29,8 @@ let processPrimeTrialSignupEvents = (data) => {
 
   var queries = [];
 
+  stats.increment('.backend.worker.counters.primeTrialSignupDbEntries');  
+
   return Promise.all([
     // save event
     trialSignup.saveAsync(),
@@ -61,6 +63,8 @@ let processPrimeTrialOptoutEvents = (data) => {
   var trialOptout = new PrimeTrialOptout(trialOptoutEvent);
 
   var queries = [];
+
+  stats.increment('.backend.worker.counters.primeTrialOptoutDbEntries');  
 
   return Promise.all([
     // save event

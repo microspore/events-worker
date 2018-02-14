@@ -1,0 +1,18 @@
+
+> events-worker@1.0.0 start /Users/mike/Dropbox/Work/Code/HackReactor/HRSF86/microspore/services/events/events-worker
+> node index.js -p
+
+Keyspace events
+Connected to Cassandra on 127.0.0.1:9042
+Using events keyspace
+TypeError: process.stdout.clearLine is not a function
+    at Progress.tick (/Users/mike/Dropbox/Work/Code/HackReactor/HRSF86/microspore/services/events/events-worker/worker.js:34:20)
+    at queue.on (/Users/mike/Dropbox/Work/Code/HackReactor/HRSF86/microspore/services/events/events-worker/worker.js:47:14)
+    at Promise.all.handlers.data.map.handler (/Users/mike/Dropbox/Work/Code/HackReactor/HRSF86/microspore/services/events/events-worker/queue/index.js:99:50)
+    at Array.map (<anonymous>)
+    at data.Messages.map (/Users/mike/Dropbox/Work/Code/HackReactor/HRSF86/microspore/services/events/events-worker/queue/index.js:99:35)
+    at Array.map (<anonymous>)
+    at EventQueue.pollMessages (/Users/mike/Dropbox/Work/Code/HackReactor/HRSF86/microspore/services/events/events-worker/queue/index.js:87:33)
+    at <anonymous>
+    at process._tickDomainCallback (internal/process/next_tick.js:228:7)
+    at process.wrappedFunction (/Users/mike/Dropbox/Work/Code/HackReactor/HRSF86/microspore/node_modules/newrelic/lib/transaction/tracer/index.js:276:51)

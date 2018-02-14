@@ -1,6 +1,6 @@
-import EventQueue from './queue';
-import processOrderEvents from './ordersEvents';
-import processPrimeEvents from './primeEvents';
+const EventQueue = require('./queue');
+const processOrderEvents = require('./ordersEvents');
+const processPrimeEvents = require('./primeEvents');
 
 const queue = new EventQueue();
 
